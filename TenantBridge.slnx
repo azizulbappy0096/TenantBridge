@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BLL/BLL.csproj" Id="3c862ffc-dc59-4087-8be5-b075b5a99bb1" />
+  <Project Path="DAL/DAL.csproj" Id="915c1920-a36f-4230-97e7-463450154c6a" />
+  <Project Path="TenantBridge/Web.csproj" />
+</Solution>
