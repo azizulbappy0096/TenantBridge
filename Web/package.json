@@ -1,0 +1,17 @@
+{
+  "name": "tenant_bridge_web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "tailwind:watch": "npx @tailwindcss/cli -i .\\wwwroot\\lib\\tailwindcss\\input.css -o .\\wwwroot\\lib\\tailwindcss\\main.min.css --watch",
+    "tailwind:build": "npx @tailwindcss/cli -i .\\wwwroot\\lib\\tailwindcss\\input.css -o .\\wwwroot\\lib\\tailwindcss\\main.min.css --minify"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.12",
+    "tailwindcss": "^4.1.12",
+    "tw-animate-css": "1.3.8"
+  }
+}
