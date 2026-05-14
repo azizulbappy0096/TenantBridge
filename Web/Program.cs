@@ -12,6 +12,7 @@ builder.Services.AddSession(opt =>
     opt.Cookie.IsEssential = true;
 });
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -42,6 +43,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapStaticAssets();
 

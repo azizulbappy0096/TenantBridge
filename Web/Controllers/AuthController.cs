@@ -1,4 +1,5 @@
-﻿using BLL.DTOs;
+﻿using BLL.DTOs.Auth;
+using BLL.Enums;
 using BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View(new UserDTO());
+            return View(new RegistrationDTO());
         }
 
         [HttpPost]
@@ -40,13 +41,38 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            return View(new LoginDTO());
         }
 
         [HttpPost]
-        public IActionResult Login(string Email, string Password)
+        public IActionResult Login(LoginDTO creds)
         {
-            return View();
+            if(ModelState.IsValid)
+            {
+                var user = this.authService.Login(creds.Email, creds.Password);
+
+                if(user != null)
+                {
+                    HttpContext.Session.SetInt32("UserId", user.Id);
+                    HttpContext.Session.SetInt32("UserRole", user.Role);
+                    
+                    if(user.Role == (int)UserRole.Tenant)
+                    {
+                        return RedirectToAction("Index", "Tenant");
+                    }
+
+                    if(user.Role == (int)UserRole.Landlord)
+                    {
+                        return RedirectToAction("Index", "Landlord");
+                    }
+
+                    return RedirectToAction("Index", "Dashboard");
+
+                }
+                
+            }
+
+            return View(creds);
         }
 
 
