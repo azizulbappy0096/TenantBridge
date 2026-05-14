@@ -16,6 +16,14 @@ public partial class TenantBridgeContext : DbContext
     {
     }
 
+    public virtual DbSet<Lease> Leases { get; set; }
+
+    public virtual DbSet<Payment> Payments { get; set; }
+
+    public virtual DbSet<Property> Properties { get; set; }
+
+    public virtual DbSet<Reminder> Reminders { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -26,6 +34,104 @@ public partial class TenantBridgeContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Lease>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getutcdate())", "DF_Leases_created_at")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DepositAmount).HasColumnName("deposit_amount");
+            entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.PropertyId).HasColumnName("property_id");
+            entity.Property(e => e.RentAmount).HasColumnName("rent_amount");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
+            entity.Property(e => e.TenantId).HasColumnName("tenant_id");
+
+            entity.HasOne(d => d.Property).WithMany(p => p.Leases)
+                .HasForeignKey(d => d.PropertyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Leases_Property_Id");
+
+            entity.HasOne(d => d.Tenant).WithMany(p => p.Leases)
+                .HasForeignKey(d => d.TenantId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Leases_Tenant_Id");
+        });
+
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Amount).HasColumnName("amount");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getutcdate())", "DF_Payments_created_at")
+                .HasColumnName("created_at");
+            entity.Property(e => e.PaidDate).HasColumnName("paid_date");
+            entity.Property(e => e.PropertyId).HasColumnName("property_id");
+            entity.Property(e => e.ReceiptNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("receipt_no");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("status");
+            entity.Property(e => e.TenantId).HasColumnName("tenant_id");
+            entity.Property(e => e.Type)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("type");
+
+            entity.HasOne(d => d.Property).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.PropertyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Payments_Property_id");
+
+            entity.HasOne(d => d.Tenant).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.TenantId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Payments_Tenant_Id");
+        });
+
+        modelBuilder.Entity<Property>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Address)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("address");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getutcdate())", "DF_Properties_createdAt")
+                .HasColumnName("created_at");
+            entity.Property(e => e.LandlordId).HasColumnName("landlord_id");
+
+            entity.HasOne(d => d.Landlord).WithMany(p => p.Properties)
+                .HasForeignKey(d => d.LandlordId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Properties_Landlord");
+        });
+
+        modelBuilder.Entity<Reminder>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.Message)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("message");
+            entity.Property(e => e.ReceivedBy).HasColumnName("received_by");
+            entity.Property(e => e.SentBy).HasColumnName("sent_by");
+
+            entity.HasOne(d => d.ReceivedByNavigation).WithMany(p => p.ReminderReceivedByNavigations)
+                .HasForeignKey(d => d.ReceivedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Reminders_Received_By");
+
+            entity.HasOne(d => d.SentByNavigation).WithMany(p => p.ReminderSentByNavigations)
+                .HasForeignKey(d => d.SentBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Reminders_Sent_By");
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("id");

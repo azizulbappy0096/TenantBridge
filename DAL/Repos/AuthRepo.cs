@@ -41,6 +41,14 @@ namespace DAL.Repos
             return db.SaveChanges() > 0;
         }
 
+        public bool ChangePassword(int id, string oldPassword, string newPassword)
+        {
+            var user = Get(id);
+            if (user == null || !user.Password.Equals(oldPassword)) return false;
+            user.Password = newPassword;
+            return Update(user);
+        }
+
         public bool Update(User user)
         {
             var data = Get(user.Id);

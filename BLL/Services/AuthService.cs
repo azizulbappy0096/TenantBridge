@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.DTOs.Auth;
 using DAL.EF.Tables;
 using DAL.Repos;
 using System;
@@ -36,10 +37,26 @@ namespace BLL.Services
             return entity;
         }
 
-        public bool Register(UserDTO user)
+        public bool Register(RegistrationDTO user)
         {
             var entity = mapper.Map<User>(user);
             return repo.Register(entity);
+        }
+
+        public bool ChangePassword(int id, string oldPassword, string newPassword)
+        {
+            return repo.ChangePassword(id, oldPassword, newPassword);
+        }
+
+        public bool Update(UpdateProfileDTO user)
+        {
+            var existingUser = repo.Get(user.Id);
+            if (existingUser == null) return false;
+
+            existingUser.FullName = user.FullName;
+            existingUser.PhoneNumber = user.PhoneNumber;
+
+            return repo.Update(existingUser);
         }
 
     }

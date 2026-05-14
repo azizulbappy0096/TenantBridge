@@ -17,5 +17,15 @@ public partial class User
 
     public string PhoneNumber { get; set; } = null!;
 
+    public virtual ICollection<Lease> Leases { get; set; } = new List<Lease>();
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+
+    public virtual ICollection<Property> Properties { get; set; } = new List<Property>();
+
+    public virtual ICollection<Reminder> ReminderReceivedByNavigations { get; set; } = new List<Reminder>();
+
+    public virtual ICollection<Reminder> ReminderSentByNavigations { get; set; } = new List<Reminder>();
+
     public virtual Role RoleNavigation { get; set; } = null!;
 }

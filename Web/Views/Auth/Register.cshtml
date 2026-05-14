@@ -113,32 +113,7 @@
             </div>
             <span asp-validation-for="Role" class="text-red-500 text-sm"></span>
         </div>
-        <div id="propertyCodeWrapper">
-            <label class="text-sm text-gray-600 mb-1.5 block">Property Code <span class="text-red-500">*</span></label>
-            <div class="relative">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="24"
-                     height="24"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                     class="lucide lucide-key-round absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400">
-                    <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path>
-                    <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
-                </svg>
-                <input 
-                       placeholder="Get this from your landlord"
-                       class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 bg-gray-50 focus:bg-white transition-colors"
-                        />
-            </div>
-            <span asp-validation-for="PropertyCode" class="text-red-500 text-sm"></span>
-            <p class="text-xs text-gray-400 mt-1">
-                Your landlord can share this from the Properties section
-            </p>
-        </div>
+        
 
         <div>
             <label class="text-sm text-gray-600 mb-1.5 block"> Password </label>
@@ -307,14 +282,12 @@
             const roleInput =
                 document.getElementById("roleInput");
 
-            const propertyCodeWrapper =
-                document.getElementById("propertyCodeWrapper");
 
-            if (!tenantBtn || !landlordBtn || !propertyCodeWrapper)
+            if (!tenantBtn || !landlordBtn)
                 return;
 
             roleInput.value = "2";
-            propertyCodeWrapper.style.display = "block";
+        
 
             tenantBtn.addEventListener("click", () => {
 
@@ -344,7 +317,7 @@
                     "text-gray-500"
                 );
 
-                propertyCodeWrapper.style.display = "block";
+               
             });
 
             landlordBtn.addEventListener("click", () => {
@@ -375,7 +348,7 @@
                     "text-gray-500"
                 );
 
-                propertyCodeWrapper.style.display = "none";
+               
             });
         }
 

@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace DAL.EF.Tables;
+
+public partial class Property
+{
+    public int Id { get; set; }
+
+    public int LandlordId { get; set; }
+
+    public string Address { get; set; } = null!;
+
+    public DateTime CreatedAt { get; set; }
+
+    public virtual User Landlord { get; set; } = null!;
+
+    public virtual ICollection<Lease> Leases { get; set; } = new List<Lease>();
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+}
