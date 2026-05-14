@@ -22,10 +22,6 @@ namespace BLL.DTOs
         public string Password { get; set; } = null!;
 
         [Required]
-        [Compare("Password")]
-        public string ConfirmPassword { get; set; } = null!;
-
-        [Required]
         public string PhoneNumber { get; set; }
 
         public int Role { get; set; }

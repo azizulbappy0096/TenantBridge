@@ -75,6 +75,20 @@ namespace Web.Controllers
             return View(creds);
         }
 
+        public IActionResult Settings()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
+            var user = this.authService.Get((int)userId);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+            return View(user);
+        }
 
     }
 }

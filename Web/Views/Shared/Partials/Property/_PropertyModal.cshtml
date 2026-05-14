@@ -1,0 +1,107 @@
+﻿<div id="propertyModal" class="fixed inset-0 bg-black/40 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="lucide lucide-building2 lucide-building-2 w-4 h-4 text-white">
+                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                        <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                        <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                        <path d="M10 6h4"></path>
+                        <path d="M10 10h4"></path>
+                        <path d="M10 14h4"></path>
+                        <path d="M10 18h4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-gray-900">Add New Property</h3>
+            </div>
+            <button onclick="closePropertyModal()">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="lucide lucide-x w-5 h-5 text-gray-400 hover:text-gray-600">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <form class="space-y-4">
+            <div>
+                <label class="text-sm text-gray-600 mb-1.5 block">Property Address <span class="text-red-500">*</span></label><input required=""
+                                                                                                                                     placeholder="Flat 4B, Mirpur-10, Dhaka"
+                                                                                                                                     class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-gray-50 focus:bg-white transition-colors"
+                                                                                                                                     value="" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-sm text-gray-600 mb-1.5 block">Monthly Rent (৳) <span class="text-red-500">*</span></label><input type="number"
+                                                                                                                                         required=""
+                                                                                                                                         min="0"
+                                                                                                                                         placeholder="18000"
+                                                                                                                                         class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-gray-50 focus:bg-white transition-colors"
+                                                                                                                                         value="" />
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600 mb-1.5 block">Deposit Amount (৳)</label><input type="number"
+                                                                                                       min="0"
+                                                                                                       placeholder="54000"
+                                                                                                       class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-gray-50 focus:bg-white transition-colors"
+                                                                                                       value="" />
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-sm text-gray-600 mb-1.5 block">Lease Start</label><input type="date"
+                                                                                                class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-gray-50 focus:bg-white transition-colors"
+                                                                                                value="" />
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600 mb-1.5 block">Lease End</label><input type="date"
+                                                                                              class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-gray-50 focus:bg-white transition-colors"
+                                                                                              value="" />
+                </div>
+            </div>
+            <div class="bg-blue-50 border border-blue-100 rounded-xl px-3 py-2.5 text-xs text-blue-700">
+                A unique property code will be generated. Share it with your tenant so
+                they can link to this property when registering.
+            </div>
+            <div class="flex gap-2 pt-1">
+                <button type="submit"
+                        class="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm hover:bg-indigo-700 disabled:opacity-70 flex items-center justify-center gap-2 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="lucide lucide-plus w-4 h-4">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5v14"></path>
+                    </svg>
+                    Add Property
+                </button><button onclick="closePropertyModal()" type="button"
+                             class="px-4 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
+</div>

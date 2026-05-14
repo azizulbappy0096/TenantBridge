@@ -8,5 +8,26 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        public IActionResult Properties()
+        {
+            return View();
+        }
+
+        public IActionResult RentTracker()
+        {
+            return View();
+        }
+
+        public IActionResult DepositLedger()
+        {
+            return View();
+        }
+
+        public IActionResult LeaseAlerts()
+        {
+            return View();
+        }
+
     }
 }
