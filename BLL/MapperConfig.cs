@@ -21,6 +21,15 @@ namespace BLL
 
             // Role
             opt.CreateMap<Role, RoleDTO>().ReverseMap();
+
+            // Property
+            opt.CreateMap<Property, PropertyDTO>().ReverseMap();
+
+            // Lease
+            opt.CreateMap<Lease, LeaseDTO>().ReverseMap();
+
+            // Payment
+            opt.CreateMap<Payment, PaymentDTO>().ReverseMap();
         });
 
         public static Mapper GetMapper()

@@ -37,6 +37,9 @@ public partial class TenantBridgeContext : DbContext
         modelBuilder.Entity<Lease>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Active)
+                .HasDefaultValue(true, "DF_Leases_active")
+                .HasColumnName("active");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getutcdate())", "DF_Leases_created_at")
                 .HasColumnName("created_at");

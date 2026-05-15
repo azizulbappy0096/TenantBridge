@@ -3,11 +3,15 @@ using BLL.DTOs.Auth;
 using BLL.Enums;
 using BLL.Services;
 using DAL.EF.Tables;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Web.AuthFilters;
 using Web.Models;
 
 namespace Web.Controllers
 {
+    
     public class AuthController : Controller
     {
         AuthService authService;
@@ -48,7 +52,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginDTO creds)
+        public async Task<IActionResult> Login(LoginDTO creds)
         {
             if(ModelState.IsValid)
             {
@@ -56,6 +60,18 @@ namespace Web.Controllers
 
                 if(user != null)
                 {
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Role, user.Role.ToString())
+                    };
+                    
+                    var identity = new ClaimsIdentity(claims, "auth");
+                    var principal = new ClaimsPrincipal(identity);
+
+                    await HttpContext.SignInAsync("auth", principal);
+
                     HttpContext.Session.SetInt32("UserId", user.Id);
                     HttpContext.Session.SetInt32("UserRole", user.Role);
                     
@@ -72,12 +88,14 @@ namespace Web.Controllers
                     return RedirectToAction("Index", "Dashboard");
 
                 }
-                
+
+                ModelState.AddModelError("", "Invalid credentials");
             }
 
             return View(creds);
         }
 
+        [Logged]
         public IActionResult Settings()
         {
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -111,6 +129,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [Logged]
         [ValidateAntiForgeryToken]
         public IActionResult Update(UpdateProfileDTO obj)
         {
@@ -141,6 +160,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [Logged]
         [ValidateAntiForgeryToken]
         public IActionResult ChangePassword(ChangePasswordDTO obj)
         {

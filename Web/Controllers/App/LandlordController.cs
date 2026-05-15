@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web.AuthFilters;
 
 namespace Web.Controllers
 {
+    [Logged]
+    [LandlordAccess]
     public class LandlordController : Controller
     {
         public IActionResult Index()

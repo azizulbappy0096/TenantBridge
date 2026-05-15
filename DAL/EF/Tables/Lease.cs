@@ -21,6 +21,8 @@ public partial class Lease
 
     public DateTime CreatedAt { get; set; }
 
+    public bool Active { get; set; }
+
     public virtual Property Property { get; set; } = null!;
 
     public virtual User Tenant { get; set; } = null!;
