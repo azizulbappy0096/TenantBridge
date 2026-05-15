@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL.Enums;
+using BLL.Services;
+using Microsoft.AspNetCore.Mvc;
 using Web.AuthFilters;
+using Web.Helpers;
 
 namespace Web.Controllers
 {
-    [Logged]
-    [LandlordAccess]
+    [AuthAccess(UserRole.Landlord)]
     public class LandlordController : Controller
     {
+        PropertyService propertyService;
+        CurrentUser currentUser;
+
+        public LandlordController(PropertyService propertyService, CurrentUser currentUser)
+        {
+            this.propertyService = propertyService;
+            this.currentUser = currentUser;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -14,7 +25,8 @@ namespace Web.Controllers
 
         public IActionResult Properties()
         {
-            return View();
+            var properties = propertyService.GetByLandlord(this.currentUser.UserId);
+            return View(properties);
         }
 
         public IActionResult RentTracker()

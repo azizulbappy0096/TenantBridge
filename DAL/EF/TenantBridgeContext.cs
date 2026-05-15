@@ -98,6 +98,9 @@ public partial class TenantBridgeContext : DbContext
         modelBuilder.Entity<Property>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Active)
+                .HasDefaultValue(true, "DF_Properties_active")
+                .HasColumnName("active");
             entity.Property(e => e.Address)
                 .HasMaxLength(50)
                 .IsUnicode(false)

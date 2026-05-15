@@ -7,7 +7,6 @@ namespace BLL.DTOs.Auth
 {
     public class ChangePasswordDTO
     {
-        public int Id { get; set; }
 
         [Required]
         public string OldPassword { get; set; } = null!;

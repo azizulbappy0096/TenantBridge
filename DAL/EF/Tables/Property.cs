@@ -11,6 +11,8 @@ public partial class Property
 
     public string Address { get; set; } = null!;
 
+    public bool Active { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public virtual User Landlord { get; set; } = null!;

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
-using BLL.DTOs.Auth;
 using DAL.EF.Tables;
 using DAL.Repos;
 using System;

@@ -13,8 +13,14 @@ namespace BLL.DTOs
 
         public string Address { get; set; } = null!;
 
+        public bool Active { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public virtual User Landlord { get; set; } = null!;
+
+        public virtual ICollection<Lease> Leases { get; set; } = new List<Lease>();
+
+        public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

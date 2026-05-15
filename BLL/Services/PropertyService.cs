@@ -28,6 +28,13 @@ namespace BLL.Services
             return entity;
         }
 
+        public List<PropertyDTO> GetByLandlord(int landlordId)
+        {
+            var data = this.repo.GetByLandlord(landlordId);
+            var entity = this.mapper.Map<List<PropertyDTO>>(data);
+            return entity;
+        }
+
         public List<PropertyDTO> Get()
         {
             var data = this.repo.Get();

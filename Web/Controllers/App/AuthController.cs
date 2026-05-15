@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Web.AuthFilters;
+using Web.Helpers;
 using Web.Models;
 
 namespace Web.Controllers
@@ -15,10 +16,12 @@ namespace Web.Controllers
     public class AuthController : Controller
     {
         AuthService authService;
+        CurrentUser currentUser;
 
-        public AuthController(AuthService authService)
+        public AuthController(AuthService authService, CurrentUser currentUser)
         {
             this.authService = authService;
+            this.currentUser = currentUser;
         }
 
         public IActionResult Index()
@@ -27,12 +30,14 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [AuthAccess("Login")]
         public IActionResult Register()
         {
             return View(new RegistrationDTO());
         }
 
         [HttpPost]
+        [AuthAccess("Login")]
         public IActionResult Register(RegistrationDTO user)
         {
             if(ModelState.IsValid)
@@ -45,13 +50,16 @@ namespace Web.Controllers
             return View(user);
         }
 
+        
         [HttpGet]
+        [AuthAccess("Login")]
         public IActionResult Login()
         {
             return View(new LoginDTO());
         }
 
         [HttpPost]
+        [AuthAccess("Login")]
         public async Task<IActionResult> Login(LoginDTO creds)
         {
             if(ModelState.IsValid)
@@ -67,13 +75,10 @@ namespace Web.Controllers
                         new Claim(ClaimTypes.Role, user.Role.ToString())
                     };
                     
-                    var identity = new ClaimsIdentity(claims, "auth");
+                    var identity = new ClaimsIdentity(claims, "AuthCookie");
                     var principal = new ClaimsPrincipal(identity);
 
-                    await HttpContext.SignInAsync("auth", principal);
-
-                    HttpContext.Session.SetInt32("UserId", user.Id);
-                    HttpContext.Session.SetInt32("UserRole", user.Role);
+                    await HttpContext.SignInAsync("AuthCookie", principal);
                     
                     if(user.Role == (int)UserRole.Tenant)
                     {
@@ -95,15 +100,16 @@ namespace Web.Controllers
             return View(creds);
         }
 
-        [Logged]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("AuthCookie");
+            return RedirectToAction("Login");
+        }
+
+        [AuthAccess]
         public IActionResult Settings()
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login");
-            }
-            var user = this.authService.Get((int)userId);
+            var user = this.authService.Get(this.currentUser.UserId);
             if (user == null)
             {
                 return RedirectToAction("Login");
@@ -118,10 +124,6 @@ namespace Web.Controllers
                     FullName = user.FullName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber
-                },
-                Password =
-                {
-                    Id = user.Id
                 }
             };
 
@@ -129,7 +131,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [Logged]
+        [AuthAccess]
         [ValidateAntiForgeryToken]
         public IActionResult Update(UpdateProfileDTO obj)
         {
@@ -146,27 +148,23 @@ namespace Web.Controllers
                     TempData["Error"] = "Failed to update profile.";
                 }
             }
-            var user = this.authService.Get(obj.Id);
+            var user = this.authService.Get(this.currentUser.UserId);
             var model = new SettingsViewModel
             {
                 User = user,
                 Profile = obj,
-                Password =
-                {
-                    Id = user.Id
-                }
             };
             return View("Settings", model);
         }
 
         [HttpPost]
-        [Logged]
+        [AuthAccess]
         [ValidateAntiForgeryToken]
         public IActionResult ChangePassword(ChangePasswordDTO obj)
         {
             if (ModelState.IsValid)
             {
-                var success = this.authService.ChangePassword(obj.Id, obj.OldPassword, obj.NewPassword);
+                var success = this.authService.ChangePassword(this.currentUser.UserId, obj.OldPassword, obj.NewPassword);
                 if (success)
                 {
                     TempData["Success"] = "Password changed successfully!";
@@ -178,7 +176,7 @@ namespace Web.Controllers
                 }
             }
 
-            var user = this.authService.Get(obj.Id);
+            var user = this.authService.Get(this.currentUser.UserId);
             var model = new SettingsViewModel
             {
                 User = user,

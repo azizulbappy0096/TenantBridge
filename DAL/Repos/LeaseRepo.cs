@@ -48,7 +48,14 @@ namespace DAL.Repos
         {
             var lease = Get(id);
             if (lease == null) return false;
-            db.Leases.Remove(lease);
+            lease.Active = false;
+            return db.SaveChanges() > 0;
+        }
+
+        public bool DeleteByProperty(int propertyId)
+        {
+            var leases = db.Leases.Where(l => l.PropertyId == propertyId).ToList();
+            leases.ForEach(l => l.Active = false);
             return db.SaveChanges() > 0;
         }
     }

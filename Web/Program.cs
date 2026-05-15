@@ -3,6 +3,7 @@ using DAL.EF;
 using DAL.Repos;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Web.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDistributedMemoryCache();
@@ -13,7 +14,7 @@ builder.Services.AddSession(opt =>
     opt.Cookie.IsEssential = true;
 });
 
-builder.Services.AddAuthentication("auth").AddCookie(opt =>
+builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", opt =>
 {
     opt.LoginPath = "/Auth/Login";
     opt.LogoutPath = "/Auth/Logout";
@@ -39,6 +40,11 @@ builder.Services.AddScoped<PropertyService>();
 builder.Services.AddScoped<LeaseService>();
 builder.Services.AddScoped<PaymentService>();
 
+builder.Services.AddHttpContextAccessor();
+
+// Helpers
+builder.Services.AddScoped<CurrentUser>();
+
 // Database Context
 builder.Services.AddDbContext<TenantBridgeContext>(opt => { 
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConn")); 
@@ -57,9 +63,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession();
 
 app.MapStaticAssets();
 
