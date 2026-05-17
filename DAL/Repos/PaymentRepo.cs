@@ -1,5 +1,7 @@
 ﻿using DAL.EF;
 using DAL.EF.Tables;
+using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,9 +27,50 @@ namespace DAL.Repos
             return db.Payments.ToList();
         }
 
+        public List<Payment> GetByLandlordId(int landlordId)
+        {
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Property.LandlordId == landlordId).ToList();
+        }
+        public List<Payment> GetByLandlordId(int landlordId, string type)
+        {
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Property.LandlordId == landlordId && p.Type == type).ToList();
+        }
+
+
+        public List<Payment> GetByTenantId(int tenantId)
+        {
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Lease.TenantId == tenantId).ToList();
+        }
+        public List<Payment> GetByTenantId(int tenantId, string type)
+        {
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Lease.TenantId == tenantId && p.Type == type).ToList();
+        }
+
+
+       public RentAnalytics GetRentAnalyticsForLandlord(int landlordId)
+        {
+            var payments = db.Payments.Where(p => p.Property.LandlordId == landlordId && p.Type == "Rent").ToList();
+            var rentCollected = payments.Where(p => p.Status == "Paid").Sum(p => (double?)p.Amount) ?? 0;
+            var pendingRent = payments.Where(p => p.Status == "Pending").Sum(p => (double?)p.Amount) ?? 0;
+
+            return new RentAnalytics
+            {
+                RentCollected = rentCollected,
+                PendingRent = pendingRent,
+                CollectionRate = rentCollected + pendingRent > 0 ? (rentCollected / (rentCollected + pendingRent)) * 100 : 0
+            };
+        }
+
+
         public bool Create(Payment payment)
         {
             db.Payments.Add(payment);
+            return db.SaveChanges() > 0;
+        }
+
+        public bool Update(Payment payment)
+        {
+            db.Entry(payment).CurrentValues.SetValues(payment);
             return db.SaveChanges() > 0;
         }
 

@@ -1,7 +1,7 @@
 ﻿@model BLL.DTOs.PropertyDTO
 
 @{
-    var Lease = Model.Leases.FirstOrDefault();
+    var Lease = Model.Leases.Count > 0 ? Model.Leases.FirstOrDefault() : null;
 }
 
 <div id="property_@Model.Id" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
@@ -26,7 +26,19 @@
                style="font-weight: 600">
                 @Model.Address
             </p>
-            <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">109d left — Active</span>
+            @if(Lease != null)
+            {
+                var DaysLeft = Lease?.EndDate.ToDateTime(TimeOnly.MinValue).Subtract(DateTime.Now).Days;
+                if(Lease.Active)
+                {
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">@DaysLeft days left — Active</span>
+                }
+                
+            }else
+            {
+                <span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full"> — </span>
+            }
+            
         </div>
     </div>
     <div class="grid grid-cols-2 gap-3 bg-gray-50 rounded-xl p-3">
@@ -48,7 +60,7 @@
                 Monthly Rent
             </p>
             <p class="text-sm text-gray-800 mt-0.5" style="font-weight: 600">
-                @(Lease != null ? "৳@Lease.RentAmount" : "—")
+                @(Lease != null ? $"৳{Lease.RentAmount}" : "—")
             </p>
         </div>
         <div>
@@ -70,7 +82,7 @@
             </p>
             <p class="text-sm text-gray-800 mt-0.5 truncate"
                style="font-weight: 500">
-                @(Lease?.Tenant?.FullName != null ? "Lease?.Tenant?.FullName" : "—")
+                @(Lease?.Tenant?.FullName ?? "—")
             </p>
         </div>
         <div>
@@ -98,7 +110,7 @@
                 </svg>
                 Lease Start
             </p>
-            <p class="text-sm text-gray-800 mt-0.5"> @(Lease != null ? @Lease.StartDate.ToString("yyyy-mm-dd") : "—")</p>
+            <p class="text-sm text-gray-800 mt-0.5"> @(Lease != null ? Lease.StartDate : "—")</p>
         </div>
         <div>
             <p class="text-xs text-gray-400 flex items-center gap-1">
@@ -125,12 +137,12 @@
                 </svg>
                 Lease End
             </p>
-            <p class="text-sm text-gray-800 mt-0.5">@(Lease != null ? @Lease.EndDate.ToString("yyyy-mm-dd") : "—")</p>
+            <p class="text-sm text-gray-800 mt-0.5">@(Lease != null ? Lease.EndDate : "—")</p>
         </div>
     </div>
 
     
-    <button class="w-full text-xs text-red-600 hover:text-red-800 px-3 py-2 bg-red-50 border border-red-100 rounded-md hover:bg-red-100 transition-colors">
+    <button type="button" onclick="deleteProperty(@Model.Id)" class="w-full text-xs text-red-600 hover:text-red-800 px-3 py-2 bg-red-50 border border-red-100 rounded-md hover:bg-red-100 transition-colors">
         Delete
     </button>
 

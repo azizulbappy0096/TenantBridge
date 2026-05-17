@@ -30,6 +30,11 @@ namespace DAL.Repos
             return db.Users.Where(u => u.Email.Equals(email)).FirstOrDefault();
         }
 
+        public List<User> GetByRole(int role)
+        {
+            return db.Users.Where(u => u.Role == role).ToList();
+        }
+
         public User? Login(string email, string password)
         {
             return db.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(password)).FirstOrDefault();

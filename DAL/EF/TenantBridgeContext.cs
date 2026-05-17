@@ -45,17 +45,23 @@ public partial class TenantBridgeContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.DepositAmount).HasColumnName("deposit_amount");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.LandlordId).HasColumnName("landlord_id");
             entity.Property(e => e.PropertyId).HasColumnName("property_id");
             entity.Property(e => e.RentAmount).HasColumnName("rent_amount");
             entity.Property(e => e.StartDate).HasColumnName("start_date");
             entity.Property(e => e.TenantId).HasColumnName("tenant_id");
+
+            entity.HasOne(d => d.Landlord).WithMany(p => p.LeaseLandlords)
+                .HasForeignKey(d => d.LandlordId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Leases_Landlord_Id");
 
             entity.HasOne(d => d.Property).WithMany(p => p.Leases)
                 .HasForeignKey(d => d.PropertyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Leases_Property_Id");
 
-            entity.HasOne(d => d.Tenant).WithMany(p => p.Leases)
+            entity.HasOne(d => d.Tenant).WithMany(p => p.LeaseTenants)
                 .HasForeignKey(d => d.TenantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Leases_Tenant_Id");
@@ -68,31 +74,35 @@ public partial class TenantBridgeContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getutcdate())", "DF_Payments_created_at")
                 .HasColumnName("created_at");
+            entity.Property(e => e.LeaseId).HasColumnName("lease_id");
             entity.Property(e => e.PaidDate).HasColumnName("paid_date");
             entity.Property(e => e.PropertyId).HasColumnName("property_id");
             entity.Property(e => e.ReceiptNo)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("receipt_no");
+            entity.Property(e => e.RentMonth)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("rent_month");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("status");
-            entity.Property(e => e.TenantId).HasColumnName("tenant_id");
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("type");
 
+            entity.HasOne(d => d.Lease).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.LeaseId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Payments_Lease_Id");
+
             entity.HasOne(d => d.Property).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.PropertyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Payments_Property_id");
-
-            entity.HasOne(d => d.Tenant).WithMany(p => p.Payments)
-                .HasForeignKey(d => d.TenantId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Payments_Tenant_Id");
         });
 
         modelBuilder.Entity<Property>(entity =>

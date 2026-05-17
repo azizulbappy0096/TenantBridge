@@ -11,11 +11,13 @@ namespace BLL.DTOs
 
         public int PropertyId { get; set; }
 
-        public int TenantId { get; set; }
+        public int LeaseId { get; set; }
 
         public double Amount { get; set; }
 
         public string Type { get; set; } = null!;
+
+        public string? RentMonth { get; set; }
 
         public string Status { get; set; } = null!;
 
@@ -25,8 +27,8 @@ namespace BLL.DTOs
 
         public DateTime CreatedAt { get; set; }
 
-        public virtual Property Property { get; set; } = null!;
+        public virtual Lease Lease { get; set; } = null!;
 
-        public virtual User Tenant { get; set; } = null!;
+        public virtual Property Property { get; set; } = null!;
     }
 }

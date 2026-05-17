@@ -1,0 +1,107 @@
+﻿
+<div id="createModal" class="fixed inset-0 bg-black/40 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+        <div class="flex items-center justify-between mb-5">
+            <h3>Create Lease Agreement</h3>
+            <button onclick="closeCreateModal()">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="lucide lucide-x w-5 h-5 text-gray-400">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="messageContainer">
+
+        </div>
+        <form onsubmit="submitCreateForm(event)">
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm text-gray-600 mb-1 block">Property</label>
+                    <select name="PropertyId" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                        <option value="" disabled selected>Select a property</option>
+                        @foreach (var property in ViewBag.Properties)
+                        {
+                            <option value="@property.Id">@property.Address</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600 mb-1 block">Tenant</label>
+                    <select name="TenantId" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                        <option value="" disabled selected>Select a tenant</option>
+                        @foreach (var tenant in ViewBag.Tenants)
+                        {
+                            <option value="@tenant.Id">@tenant.FullName</option>
+                        }
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-sm text-gray-600 mb-1 block"> Start Date</label>
+                        <input type="date"
+                               class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                               name="StartDate" />
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-600 mb-1 block"> End Date</label>
+                        <input type="date"
+                               class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                               name="EndDate" />
+                    </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600 mb-1 block">Monthly Rent (৳)</label>
+                    <input type="number"
+                           class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                           name="RentAmount" />
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600 mb-1 block">Deposit Amount (৳)</label>
+                    <input type="number"
+                           class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                           name="DepositAmount" />
+                </div>
+                <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-3 text-sm text-indigo-700">
+                    Renewal alerts will be auto-sent at 60, 30, and 7 days before new
+                    expiry.
+                </div>
+            </div>
+            <div class="mt-5 flex gap-2">
+                <button type="submit" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm hover:bg-indigo-700 transition-colors">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="24"
+                             height="24"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             class="lucide lucide-file-text w-4 h-4">
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                            <path d="M10 9H8"></path>
+                            <path d="M16 13H8"></path>
+                            <path d="M16 17H8"></path>
+                        </svg>
+                        Save Lease
+                    </span>
+                </button>
+                <button type="button" onclick="closeCreateModal()" class="px-4 py-2 border border-gray-200 rounded-xl text-sm text-gray-600">
+                    Cancel
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

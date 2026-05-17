@@ -17,9 +17,9 @@ public partial class User
 
     public string PhoneNumber { get; set; } = null!;
 
-    public virtual ICollection<Lease> Leases { get; set; } = new List<Lease>();
+    public virtual ICollection<Lease> LeaseLandlords { get; set; } = new List<Lease>();
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+    public virtual ICollection<Lease> LeaseTenants { get; set; } = new List<Lease>();
 
     public virtual ICollection<Property> Properties { get; set; } = new List<Property>();
 

@@ -1,36 +1,33 @@
 ﻿using DAL.EF.Tables;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace BLL.DTOs
+namespace BLL.DTOs.FormDTOs
 {
-    public class LeaseDTO
+    public class LeaseCreateDTO
     {
-        public int Id { get; set; }
-
+        [Required]
         public int PropertyId { get; set; }
 
+        [Required]
         public int LandlordId { get; set; }
 
+        [Required]
         public int TenantId { get; set; }
 
+        [Required]
         public double RentAmount { get; set; }
 
+        [Required]
         public double DepositAmount { get; set; }
 
+        [Required]
         public DateOnly StartDate { get; set; }
 
+        [Required]
         public DateOnly EndDate { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
-        public bool Active { get; set; }
-
-        public virtual User Landlord { get; set; } = null!;
-
-        public virtual Property Property { get; set; } = null!;
-
-        public virtual User Tenant { get; set; } = null!;
     }
 }

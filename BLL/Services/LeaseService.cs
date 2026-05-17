@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.DTOs.FormDTOs;
 using DAL.EF.Tables;
 using DAL.Repos;
 using System;
@@ -28,23 +29,30 @@ namespace BLL.Services
             return entity;
         }
 
-        public List<LeaseDTO> Get()
+        public List<LeaseDTO> GetByTenantId(int tenantId)
         {
-            var data = this.repo.Get();
+            var data = this.repo.GetByTenantId(tenantId);
             var entity = this.mapper.Map<List<LeaseDTO>>(data);
             return entity;
         }
 
-        public bool Create(LeaseDTO lease)
+        public List<LeaseDTO> GetByLandlordId(int landlordId)
+        {
+            var data = this.repo.GetByLandlordId(landlordId);
+            var entity = this.mapper.Map<List<LeaseDTO>>(data);
+            return entity;
+        }
+
+        public bool Create(LeaseCreateDTO lease)
         {
             var entity = this.mapper.Map<Lease>(lease);
             return this.repo.Create(entity);
         }
 
-        public bool Update(LeaseDTO lease)
+        public bool Update(int id, LeaseCreateDTO lease)
         {
             var entity = this.mapper.Map<Lease>(lease);
-            return this.repo.Update(entity);
+            return this.repo.Update(id, entity);
         }
 
         public bool Delete(int id)

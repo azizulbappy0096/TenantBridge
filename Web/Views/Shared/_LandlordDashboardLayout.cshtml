@@ -74,14 +74,14 @@
             class="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0 bg-indigo-600"
             style="font-weight: 700; font-size: 0.875rem"
           >
-            RU
+            @ViewBag.CurrentUser.FullName.Substring(0,2)
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-sm text-gray-900 truncate" style="font-weight: 600">
-              Rahim Uddin
+              @ViewBag.CurrentUser.FullName
             </p>
             <p class="text-xs text-gray-400 truncate">
-              landlord@tenantbridge.com
+              @ViewBag.CurrentUser.Email
             </p>
           </div>
           <span
@@ -90,31 +90,7 @@
           >
         </div>
       </div>
-      <div
-        class="mx-3 mt-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center gap-2"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-building2 lucide-building-2 w-3.5 h-3.5 text-indigo-500 shrink-0"
-        >
-          <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-          <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
-          <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
-          <path d="M10 6h4"></path>
-          <path d="M10 10h4"></path>
-          <path d="M10 14h4"></path>
-          <path d="M10 18h4"></path>
-        </svg>
-        <p class="text-xs text-indigo-700">2 properties managed</p>
-      </div>
+      
       <nav class="flex-1 p-3 space-y-0.5 overflow-y-auto mt-2">
         <p
           class="text-xs text-gray-400 px-3 py-1.5"
@@ -200,9 +176,6 @@
             ></path></svg
           ><span class="flex-1 text-sm truncate @(CurrentAction == "RentTracker" ? "font-semibold" : "")"
             >Rent Tracker</span
-          ><span
-            class="text-xs px-2 py-0.5 rounded-full shrink-0 bg-red-100 text-red-700"
-            >1 overdue</span
           ></a>
        
         <a
@@ -228,9 +201,6 @@
             ></path></svg
           ><span class="flex-1 text-sm truncate" style="font-weight: 400"
             >Deposit Ledger</span
-          ><span
-            class="text-xs px-2 py-0.5 rounded-full shrink-0 bg-orange-100 text-orange-700"
-            >1 disputed</span
           ></a>
         <a
             asp-controller="Landlord"
@@ -255,10 +225,7 @@
               d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"
             ></path></svg
           ><span class="flex-1 text-sm truncate" style="font-weight: 400"
-            >Lease Alerts</span
-          ><span
-            class="text-xs px-2 py-0.5 rounded-full shrink-0 bg-red-100 text-red-700"
-            >1 critical</span
+            >Leases</span
           ></a>
      
       </nav>
@@ -374,17 +341,7 @@
         </div>
         <div class="flex-1"></div>
         <div class="flex items-center gap-3">
-          <span class="text-xs text-gray-400 hidden sm:block">13 May 2026</span>
-          <div class="relative">
-            <button
-              class="w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs"
-              style="font-weight: 700"
-            >
-              6</button
-            ><span
-              class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"
-            ></span>
-          </div>
+          <span class="text-xs text-gray-400 hidden sm:block">@DateTime.Now.ToString("MMMM dd, yyyy")</span>
           <span
             class="hidden sm:block text-xs px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700"
             >Landlord</span
@@ -393,7 +350,7 @@
             class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs bg-indigo-600"
             style="font-weight: 700"
           >
-            RU
+            @ViewBag.CurrentUser.FullName.Substring(0,2)
           </div>
         </div>
       </header>

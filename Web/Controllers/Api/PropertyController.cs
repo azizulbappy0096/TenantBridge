@@ -39,16 +39,26 @@ namespace Web.Controllers.Api
             )
         {
 
-            if(!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var property = new PropertyDTO
             {
                 LandlordId = currentUser.UserId,
-                Address = address
+                Address = address,
+                Active = true
             };
             var success = propertyService.Create(property);
-            if (success) return Ok(new {success});
+            if (success) return Ok(new { success });
             return BadRequest();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var success = propertyService.Delete(id);
+            if (success) return Ok(new { success });
+            return BadRequest();
+
         }
 
     }

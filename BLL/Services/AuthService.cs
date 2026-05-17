@@ -25,7 +25,14 @@ namespace BLL.Services
             var data = this.repo.Get(id);
             var entity = this.mapper.Map<UserDTO>(data);
             return entity;
-        } 
+        }
+
+        public List<UserDTO> GetByRole(int role)
+        {
+            var data = this.repo.GetByRole(role);
+            var entity = this.mapper.Map<List<UserDTO>>(data);
+            return entity;
+        }
 
         public UserDTO Login(string email, string password)
         {

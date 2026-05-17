@@ -32,6 +32,7 @@ builder.Services.AddScoped<RoleRepo>();
 builder.Services.AddScoped<PropertyRepo>();
 builder.Services.AddScoped<LeaseRepo>();
 builder.Services.AddScoped<PaymentRepo>();
+builder.Services.AddScoped<AnalyticsRepo>();
 
 // Services
 builder.Services.AddScoped<AuthService>();
@@ -39,6 +40,7 @@ builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<PropertyService>();
 builder.Services.AddScoped<LeaseService>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<AnalyticService>();
 
 builder.Services.AddHttpContextAccessor();
 

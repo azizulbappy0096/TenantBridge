@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.DTOs.Analytics;
 using BLL.DTOs.Auth;
+using BLL.DTOs.FormDTOs;
 using DAL.EF.Tables;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,9 +30,15 @@ namespace BLL
 
             // Lease
             opt.CreateMap<Lease, LeaseDTO>().ReverseMap();
+            opt.CreateMap<Lease, LeaseCreateDTO>().ReverseMap();
 
             // Payment
             opt.CreateMap<Payment, PaymentDTO>().ReverseMap();
+            opt.CreateMap<Payment, PaymentCreateDTO>().ReverseMap();
+
+            // Analytics
+            opt.CreateMap<Analytics, AnalyticsDTO>().ReverseMap();
+            opt.CreateMap<RentAnalytics, RentAnalyticsDTO>().ReverseMap();
         });
 
         public static Mapper GetMapper()

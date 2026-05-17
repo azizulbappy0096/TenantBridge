@@ -30,7 +30,7 @@ namespace DAL.Repos
 
         public List<Property> GetByLandlord(int landlordId)
         {
-            return db.Properties.Where(p => p.LandlordId == landlordId).OrderByDescending(p => p.CreatedAt)
+            return db.Properties.Where(p => p.LandlordId == landlordId && p.Active).OrderByDescending(p => p.CreatedAt)
                     .Include(p => p.Landlord)
                     .Include(p => p.Leases.Where(l => l.Active)
                                           .OrderByDescending(l => l.CreatedAt)
@@ -50,9 +50,7 @@ namespace DAL.Repos
             var property = Get(id);
             if (property == null) return false;
             property.Active = false;
-            leaseRepo.DeleteByProperty(id);
-
-            return db.SaveChanges() > 0;
+            return leaseRepo.DeleteByProperty(id);
         }
 
     }

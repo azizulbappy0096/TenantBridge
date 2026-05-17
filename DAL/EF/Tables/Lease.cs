@@ -9,6 +9,8 @@ public partial class Lease
 
     public int PropertyId { get; set; }
 
+    public int LandlordId { get; set; }
+
     public int TenantId { get; set; }
 
     public double RentAmount { get; set; }
@@ -22,6 +24,10 @@ public partial class Lease
     public DateTime CreatedAt { get; set; }
 
     public bool Active { get; set; }
+
+    public virtual User Landlord { get; set; } = null!;
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     public virtual Property Property { get; set; } = null!;
 

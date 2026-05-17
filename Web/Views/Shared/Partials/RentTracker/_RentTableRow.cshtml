@@ -1,0 +1,72 @@
+﻿
+@{
+    var PendingBtn = "w-full text-xs text-orange-600 hover:text-orange-800 px-3 py-2 bg-orange-50 border border-orange-100 rounded-md hover:bg-orange-100 transition-colors";
+    var PaidBtn = "w-full text-xs text-green-600 hover:text-green-800 px-3 py-2 bg-green-50 border border-green-100 rounded-md hover:bg-green-100 transition-colors";
+    var IsPaid = Model?.Status == "Paid";
+}
+
+<tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+    <td class="px-5 py-3 text-gray-700">@Model.ReceiptNo</td>
+    <td class="px-5 py-3">
+        <p class="text-gray-800" style="font-weight: 500">
+            @Model.Lease.Tenant.FullName
+        </p>
+        <p class="text-gray-400 text-xs">@Model.Property.Address</p>
+    </td>
+    <td class="px-5 py-3 text-gray-700">@Model.RentMonth</td>
+    <td class="px-5 py-3 text-gray-600">
+        @(Model?.PaidDate != null ? Model.PaidDate.ToString("MMMM dd, yyyy") : "-")
+    </td>
+    <td class="px-5 py-3 text-right" style="font-weight: 600">
+        ৳@(Model?.Amount ?? 0)
+    </td>
+    <td class="px-5 py-3 text-center">
+        @if (Model?.Status == "Paid")
+        {
+            <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-green-100 text-green-700">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="lucide lucide-circle-check w-4 h-4 text-green-500">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                Paid
+            </span>
+        }
+        else if (Model?.Status == "Pending")
+        {
+            <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-orange-100 text-orange-700">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="lucide lucide-clock w-4 h-4 text-orange-500">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                Pending
+            </span>
+        }
+
+        
+    </td>
+
+    <td class ="px-5 py-3 text-center">
+        <button type="button" onclick="updatePayment(@Model?.Id, '@(IsPaid ? "Pending" : "Paid")')" class='@(IsPaid ? PendingBtn : PaidBtn)'>
+            Mark as @(IsPaid ? "Pending" : "Paid")
+        </button>
+    </td>
+
+</tr>
