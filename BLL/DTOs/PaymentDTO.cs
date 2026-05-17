@@ -21,7 +21,7 @@ namespace BLL.DTOs
 
         public string Status { get; set; } = null!;
 
-        public DateTime PaidDate { get; set; }
+        public DateTime? PaidDate { get; set; }
 
         public string ReceiptNo { get; set; } = null!;
 

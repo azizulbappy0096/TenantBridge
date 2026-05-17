@@ -25,6 +25,8 @@ namespace Web.Controllers.Api
         [HttpPost]
         public ActionResult Index([FromForm] PaymentCreateDTO payment)
         {
+            if(payment.Type == "Deposit") payment.Status = "Paid";
+
             var success = this.paymentService.Create(payment);
             if (success) return Ok(new { success });
             return BadRequest();

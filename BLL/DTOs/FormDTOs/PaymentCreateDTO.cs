@@ -15,18 +15,19 @@ namespace BLL.DTOs.FormDTOs
         public string PropertyLeaseId { get; set; } = null!;
 
         [Required]
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
 
-        [Required]
-        public string Status { get; set; } = null!;
+        [StatusValidator]
+        public string? Status { get; set; }
 
         [Required]
         public string Type { get; set; } = null!;
 
-        public DateTime PaidDate { get; set; }
+        [PaidDateValidator]
+        public DateTime? PaidDate { get; set; }
 
         [RentMonthValidator]
-        public string? RentMonth { get; set; }
+        public string? RentMonth { get; set; } 
 
     }
 }

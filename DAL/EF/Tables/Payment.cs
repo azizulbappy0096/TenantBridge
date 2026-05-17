@@ -19,7 +19,7 @@ public partial class Payment
 
     public string? RentMonth { get; set; }
 
-    public DateTime PaidDate { get; set; }
+    public DateTime? PaidDate { get; set; }
 
     public string ReceiptNo { get; set; } = null!;
 

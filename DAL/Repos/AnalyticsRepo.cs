@@ -56,5 +56,37 @@ namespace DAL.Repos
                     .Sum(p => (double?)p.Amount) ?? 0,
             };
         }
+
+        public RentAnalytics GetRentAnalyticsForLandlord(int landlordId)
+        {
+            var payments = db.Payments.Where(p => p.Property.LandlordId == landlordId && p.Type == "Rent").ToList();
+            var rentCollected = payments.Where(p => p.Status == "Paid").Sum(p => (double?)p.Amount) ?? 0;
+            var pendingRent = payments.Where(p => p.Status == "Pending").Sum(p => (double?)p.Amount) ?? 0;
+
+            return new RentAnalytics
+            {
+                RentCollected = rentCollected,
+                PendingRent = pendingRent,
+                CollectionRate = rentCollected + pendingRent > 0 ? (rentCollected / (rentCollected + pendingRent)) * 100 : 0
+            };
+        }
+
+        public LeaseAnalytics GetLeaseAnalyticsForLandlord(int landlordId)
+        {
+            var leases = db.Leases.Where(l => l.Property.LandlordId == landlordId && l.Active).ToList();
+            var totalLeases = leases.Count;
+
+            var today = DateOnly.FromDateTime(DateTime.Now);
+
+            var ExpireIn7Days = leases.Count(l => l.EndDate <= today.AddDays(7));
+            var ExpireIn30Days = leases.Count(l => l.EndDate <= today.AddDays(30));
+            return new LeaseAnalytics
+            {
+                Total = totalLeases,
+                ExpireIn7Days = ExpireIn7Days,
+                ExpireIn30Days = ExpireIn30Days
+            };
+
+        }
     }
 }

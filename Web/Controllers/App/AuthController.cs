@@ -5,6 +5,7 @@ using BLL.Services;
 using DAL.EF.Tables;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 using Web.AuthFilters;
 using Web.Helpers;
@@ -24,20 +25,26 @@ namespace Web.Controllers
             this.currentUser = currentUser;
         }
 
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            ViewBag.CurrentUser = currentUser;
+            base.OnActionExecuting(context);
+        }
+
         public IActionResult Index()
         {
             return RedirectToAction("Login");
         }
 
         [HttpGet]
-        [AuthAccess("Login")]
+        [AuthAccess("Register")]
         public IActionResult Register()
         {
             return View(new RegistrationDTO());
         }
 
         [HttpPost]
-        [AuthAccess("Login")]
+        [AuthAccess("Register")]
         public IActionResult Register(RegistrationDTO user)
         {
             if(ModelState.IsValid)
@@ -95,7 +102,7 @@ namespace Web.Controllers
 
                 }
 
-                ModelState.AddModelError("", "Invalid credentials");
+                TempData["Error"] = "Invalid email or password.";
             }
 
             return View(creds);

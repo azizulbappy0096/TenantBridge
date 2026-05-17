@@ -44,9 +44,8 @@
         <div>
             <p class="text-gray-400 text-xs mb-1">Deposit Paid</p>
             <p class="text-gray-900" style="font-weight: 700">৳@Model.Amount</p>
-            <p class="text-gray-400 text-xs mt-0.5">@Model.PaidDate.ToString("yyyy-MM-dd")</p>
+            <p class="text-gray-400 text-xs mt-0.5">@(Model?.PaidDate?.ToString("yyyy-MM-dd") ?? "-")</p>
         </div>
 
     </div>
-</div>
 </div>

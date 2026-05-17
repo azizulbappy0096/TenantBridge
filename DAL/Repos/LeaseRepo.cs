@@ -23,7 +23,7 @@ namespace DAL.Repos
 
         public List<Lease> GetByTenantId(int tenantId)
         {
-            return db.Leases.Where(l => l.Active && l.TenantId == tenantId).ToList();
+            return db.Leases.Where(l => l.Active && l.TenantId == tenantId).OrderByDescending(l => l.StartDate).ToList();
         }
 
         public List<Lease> GetByLandlordId(int landlordId)
@@ -32,6 +32,7 @@ namespace DAL.Repos
                 .Include(l => l.Property)
                 .Include(l => l.Tenant)
                 .Include(l => l.Landlord)
+                .OrderByDescending(l => l.StartDate)
                 .ToList();
         }
 

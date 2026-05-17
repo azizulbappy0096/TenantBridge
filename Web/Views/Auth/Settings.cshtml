@@ -67,16 +67,17 @@
             </h3>
             <div class="space-y-3 text-sm">
                 <div class="flex justify-between py-2 border-b border-gray-50">
-                    <span class="text-gray-500">Account Role</span><span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700">Landlord</span>
-                </div>
-                <div class="flex justify-between py-2 border-b border-gray-50">
-                    <span class="text-gray-500">User ID</span><span class="text-gray-400 text-xs font-mono">8fcf4632-57ff-45…</span>
-                </div>
-                <div class="flex justify-between py-2">
-                    <span class="text-gray-500">Properties Linked</span><span class="text-gray-800" style="font-weight: 500">2</span>
-                </div>
+                    <span class="text-gray-500">Account Role</span><span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700">
+                    @(Model.User.Role == (int)UserRole.Landlord ? "Landlord" : Model.User.Role == (int)UserRole.Tenant ? "Tenant" : "")
+                    </span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-50">
+                <span class="text-gray-500">User ID</span><span class="text-gray-400 text-xs font-mono">
+                    @Model.User.Id
+                </span>
             </div>
         </div>
     </div>
+</div>
 </main>
 

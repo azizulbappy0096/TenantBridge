@@ -47,25 +47,11 @@
             when tenancy ends.
         </div>
         <div class="grid grid-cols-3 gap-4">
-            <div class="bg-purple-50 border border-purple-100 rounded-2xl p-4">
-                <p class="text-purple-600 text-sm">Total in Escrow</p>
-                <p class="text-purple-900 mt-1"
+            <div class="bg-green-50 border border-green-100 rounded-2xl p-4">
+                <p class="text-green-600 text-sm">Total in Escrow</p>
+                <p class="text-green-900 mt-1"
                    style="font-size: 1.4rem; font-weight: 700">
-                    ৳129,000
-                </p>
-            </div>
-            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-4">
-                <p class="text-orange-600 text-sm">Deductions Claimed</p>
-                <p class="text-orange-800 mt-1"
-                   style="font-size: 1.4rem; font-weight: 700">
-                    ৳13,000
-                </p>
-            </div>
-            <div class="bg-red-50 border-red-100 border rounded-2xl p-4">
-                <p class="text-sm text-red-600">Disputed Deposits</p>
-                <p class="mt-1 text-red-800"
-                   style="font-size: 1.4rem; font-weight: 700">
-                    1
+                    ৳@ViewBag.TotalDeposit
                 </p>
             </div>
         </div>
@@ -74,9 +60,9 @@
             {
                 <partial name="~/Views/Shared/Partials/Deposit/_DepositCard.cshtml" model="deposit" />
             }
+        </div>
     </div>
-</div>
-</div>
+
 </main>
 
 <partial name="~/Views/Shared/Partials/Deposit/_DepositModal.cshtml" />
@@ -109,6 +95,12 @@
         }
 
 
+        const errorElems = {
+            PropertyLeaseId: document.getElementById("PropertyLeaseId-error"),
+            Amount: document.getElementById("Amount-error"),
+            PaidDate: document.getElementById("PaidDate-error")
+        }
+
         function submitForm(event) {
             event.preventDefault();
 
@@ -122,6 +114,10 @@
                 let jsonRes = await response.json();
                 if (response.ok) {
                     window.location.reload()
+                }else if(response.status === 400) {
+                    errorElems.PropertyLeaseId.innerHTML = jsonRes?.errors?.PropertyLeaseId ?? "";
+                    errorElems.Amount.innerHTML = jsonRes?.errors?.Amount ?? "";
+                    errorElems.PaidDate.innerHTML = jsonRes?.errors?.PaidDate ?? "";
                 }else {
                     messageContainer.innerHTML = messageTemplate('Failed to add deposit. Please try again.', false);
                 }
@@ -129,6 +125,6 @@
                 messageContainer.innerHTML = messageTemplate('Failed to add deposit. Please try again.', false);
             });
         }
-        
+
     </script>
 }

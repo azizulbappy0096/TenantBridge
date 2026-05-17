@@ -51,7 +51,7 @@ namespace Web.Controllers
             var data = this.paymentService.GetByLandlordId(this.currentUser.UserId, "Rent");
             var leases = this.leaseService.GetByLandlordId(this.currentUser.UserId);
 
-            var analytics = this.paymentService.GetRentAnalyticsForLandlord(this.currentUser.UserId);
+            var analytics = this.analyticService.GetRentAnalyticsForLandlord(this.currentUser.UserId);
 
             ViewBag.Leases = leases;
             ViewBag.Analytics = analytics;
@@ -65,7 +65,10 @@ namespace Web.Controllers
             var data = this.paymentService.GetByLandlordId(this.currentUser.UserId, "Deposit");
             var leases = this.leaseService.GetByLandlordId(this.currentUser.UserId);
 
+            var totalDeposit = data.Sum(p => p.Amount);
+
             ViewBag.Leases = leases;
+            ViewBag.TotalDeposit = totalDeposit;    
 
             return View(data);
 
@@ -73,14 +76,15 @@ namespace Web.Controllers
 
         public IActionResult LeaseAlerts()
         {
-
-
             var data = this.leaseService.GetByLandlordId(this.currentUser.UserId);
             var properties = this.propertyService.GetByLandlord(this.currentUser.UserId);
             var tenants = this.authService.GetByRole((int)UserRole.Tenant);
 
+            var analytics = this.analyticService.GetLeaseAnalyticsForLandlord(currentUser.UserId);
+
             ViewBag.Properties = properties;
             ViewBag.Tenants = tenants;
+            ViewBag.Analytics = analytics;
 
             return View(data);
 

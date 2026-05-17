@@ -54,54 +54,48 @@
         <div class="flex gap-2">
             <button class="px-4 py-1.5 rounded-xl text-sm transition-colors bg-indigo-600 text-white">
                 All
-            </button><button class="px-4 py-1.5 rounded-xl text-sm transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200">
-            Paid <span class="ml-1 opacity-70">(4)</span>
-        </button><button class="px-4 py-1.5 rounded-xl text-sm transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200">
-        Paid Late <span class="ml-1 opacity-70">(2)</span>
-    </button><button class="px-4 py-1.5 rounded-xl text-sm transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200">
-    Overdue <span class="ml-1 opacity-70">(1)</span>
-</button>
-</div>
-<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-            <thead>
-                <tr class="bg-gray-50 border-b border-gray-100">
-                    <th class="text-center px-5 py-3 text-gray-500 font-medium">
-                        Receipt
-                    </th>
-                    <th class="text-left px-5 py-3 text-gray-500 font-medium">
-                        Tenant
-                    </th>
-                    <th class="text-left px-5 py-3 text-gray-500 font-medium">
-                        Month
-                    </th>
-                    <th class="text-left px-5 py-3 text-gray-500 font-medium">
-                        Paid Date
-                    </th>
-                    <th class="text-right px-5 py-3 text-gray-500 font-medium">
-                        Rent
-                    </th>
-                    <th class="text-center px-5 py-3 text-gray-500 font-medium">
-                        Status
-                    </th>
-                    <th class="text-center px-5 py-3 text-gray-500 font-medium">
-                        Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var payment in Model)
-                {
-                    <partial name="~/Views/Shared/Partials/RentTracker/_RentTableRow.cshtml" model="payment" />
-                }
+            </button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 border-b border-gray-100">
+                            <th class="text-center px-5 py-3 text-gray-500 font-medium">
+                                Receipt
+                            </th>
+                            <th class="text-left px-5 py-3 text-gray-500 font-medium">
+                                Tenant
+                            </th>
+                            <th class="text-left px-5 py-3 text-gray-500 font-medium">
+                                Month
+                            </th>
+                            <th class="text-left px-5 py-3 text-gray-500 font-medium">
+                                Paid Date
+                            </th>
+                            <th class="text-right px-5 py-3 text-gray-500 font-medium">
+                                Rent
+                            </th>
+                            <th class="text-center px-5 py-3 text-gray-500 font-medium">
+                                Status
+                            </th>
+                            <th class="text-center px-5 py-3 text-gray-500 font-medium">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payment in Model)
+                        {
+                            <partial name="~/Views/Shared/Partials/RentTracker/_RentTableRow.cshtml" model="payment" />
+                        }
 
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
 
+            </div>
+        </div>
     </div>
-</div>
-</div>
 </main>
 
 
@@ -135,6 +129,15 @@
         }
 
 
+        const errorElems = {
+            PropertyLeaseId: document.getElementById("PropertyLeaseId-error"),
+            Amount: document.getElementById("Amount-error"),
+            PaidDate: document.getElementById("PaidDate-error"),
+            Status: document.getElementById("Status-error"),
+            RentMonth: document.getElementById("RentMonth-error"),
+        }
+
+
         function submitForm(event) {
             event.preventDefault();
 
@@ -148,6 +151,12 @@
                 let jsonRes = await response.json();
                 if (response.ok) {
                     window.location.reload()
+                }else if(response.status === 400) {
+                    errorElems.PropertyLeaseId.innerHTML = jsonRes?.errors?.PropertyLeaseId ?? "";
+                    errorElems.Amount.innerHTML = jsonRes?.errors?.Amount ?? "";
+                    errorElems.PaidDate.innerHTML = jsonRes?.errors?.PaidDate ?? "";
+                    errorElems.Status.innerHTML = jsonRes?.errors?.Status ?? "";
+                    errorElems.RentMonth.innerHTML = jsonRes?.errors?.RentMonth ?? "";
                 }else {
                     messageContainer.innerHTML = messageTemplate('Failed to add deposit. Please try again.', false);
                 }

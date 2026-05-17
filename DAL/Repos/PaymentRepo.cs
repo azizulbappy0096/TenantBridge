@@ -29,37 +29,25 @@ namespace DAL.Repos
 
         public List<Payment> GetByLandlordId(int landlordId)
         {
-            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Property.LandlordId == landlordId).ToList();
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Property.LandlordId == landlordId).OrderByDescending(p => p.PaidDate).ToList();
         }
         public List<Payment> GetByLandlordId(int landlordId, string type)
         {
-            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Property.LandlordId == landlordId && p.Type == type).ToList();
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Property.LandlordId == landlordId && p.Type == type).OrderByDescending(p => p.PaidDate).ToList();
         }
 
 
         public List<Payment> GetByTenantId(int tenantId)
         {
-            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Lease.TenantId == tenantId).ToList();
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Lease.TenantId == tenantId).OrderByDescending(p => p.PaidDate).ToList();
         }
         public List<Payment> GetByTenantId(int tenantId, string type)
         {
-            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Lease.TenantId == tenantId && p.Type == type).ToList();
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Lease.TenantId == tenantId && p.Type == type).OrderByDescending(p => p.PaidDate).ToList();
         }
 
 
-       public RentAnalytics GetRentAnalyticsForLandlord(int landlordId)
-        {
-            var payments = db.Payments.Where(p => p.Property.LandlordId == landlordId && p.Type == "Rent").ToList();
-            var rentCollected = payments.Where(p => p.Status == "Paid").Sum(p => (double?)p.Amount) ?? 0;
-            var pendingRent = payments.Where(p => p.Status == "Pending").Sum(p => (double?)p.Amount) ?? 0;
-
-            return new RentAnalytics
-            {
-                RentCollected = rentCollected,
-                PendingRent = pendingRent,
-                CollectionRate = rentCollected + pendingRent > 0 ? (rentCollected / (rentCollected + pendingRent)) * 100 : 0
-            };
-        }
+       
 
 
         public bool Create(Payment payment)

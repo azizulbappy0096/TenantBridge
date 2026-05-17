@@ -65,12 +65,7 @@ namespace BLL.Services
             return entity;
         }
 
-        public RentAnalyticsDTO GetRentAnalyticsForLandlord(int landlordId)
-        {
-            var data = this.repo.GetRentAnalyticsForLandlord(landlordId);
-            var entity = this.mapper.Map<RentAnalyticsDTO>(data);
-            return entity;
-        }
+        
 
         public bool Create(PaymentCreateDTO payment)
         {

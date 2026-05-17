@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -15,6 +16,7 @@ namespace BLL.DTOs.Auth
 
         [Required]
         [EmailAddress]
+        [UniqueEmailValidator]
         public string Email { get; set; } = null!;
 
         [Required]

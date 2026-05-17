@@ -23,5 +23,21 @@ namespace BLL.Services
             var analytics = this.repo.GetLandlordAnalytics(landlordId);
             return this.mapper.Map<AnalyticsDTO>(analytics);
         }
+
+        public RentAnalyticsDTO GetRentAnalyticsForLandlord(int landlordId)
+        {
+            var data = this.repo.GetRentAnalyticsForLandlord(landlordId);
+            var entity = this.mapper.Map<RentAnalyticsDTO>(data);
+            return entity;
+        }
+
+        public LeaseAnalyticsDTO GetLeaseAnalyticsForLandlord(int landlordId)
+        {
+            var data = this.repo.GetLeaseAnalyticsForLandlord(landlordId);
+            var entity = this.mapper.Map<LeaseAnalyticsDTO>(data);
+            return entity;
+        }
+
+
     }
 }
