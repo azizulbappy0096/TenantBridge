@@ -133,6 +133,14 @@
                 <span class="block sm:inline">${message}</span>
             </div>`;
 
+        const errorElems = {
+            'PropertyId': document.getElementById('PropertyId-error'),
+            'TenantId': document.getElementById('TenantId-error'),
+            'StartDate': document.getElementById('StartDate-error'),
+            'EndDate': document.getElementById('EndDate-error'),
+            'RentAmount': document.getElementById('RentAmount-error'),
+            'DepositAmount': document.getElementById('DepositAmount-error')
+        }
 
         function openCreateModal() {
           modal.classList.remove("hidden");
@@ -167,7 +175,13 @@
                 let jsonRes = await response.json();
                 if (response.ok) {
                     window.location.reload()
-                }else {
+                }else if (response.status === 400) {
+                    Object.keys(jsonRes.errors).forEach(key => {
+                        if (errorElems[key]) {
+                            errorElems[key].textContent = jsonRes.errors[key][0];
+                        }
+                    });
+                } else {
                     messageContainer.innerHTML = messageTemplate('Failed to add lease. Please try again.', false);
                 }
             }).catch(error => {
@@ -188,6 +202,12 @@
                 let jsonRes = await response.json();
                 if (response.ok) {
                     window.location.reload()
+                }else if (response.status === 400) {
+                    Object.keys(jsonRes.errors).forEach(key => {
+                        if (errorElems[key]) {
+                            errorElems[key].textContent = jsonRes.errors[key][0];
+                        }
+                    });
                 }else {
                     messageContainer.innerHTML = messageTemplate('Failed to add lease. Please try again.', false);
                 }

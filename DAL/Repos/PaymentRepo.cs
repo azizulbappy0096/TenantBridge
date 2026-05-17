@@ -33,7 +33,7 @@ namespace DAL.Repos
         }
         public List<Payment> GetByLandlordId(int landlordId, string type)
         {
-            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Where(p => p.Property.LandlordId == landlordId && p.Type == type).OrderByDescending(p => p.PaidDate).ToList();
+            return db.Payments.Include(p => p.Property).Include(p => p.Lease).Include(p => p.Lease.Tenant).Where(p => p.Property.LandlordId == landlordId && p.Type == type).OrderByDescending(p => p.PaidDate).ToList();
         }
 
 

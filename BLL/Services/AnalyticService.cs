@@ -24,6 +24,12 @@ namespace BLL.Services
             return this.mapper.Map<AnalyticsDTO>(analytics);
         }
 
+        public TenantAnalyticsDTO GetTenantAnalytics(int tenantId)
+        {
+            var analytics = this.repo.GetTenantAnalytics(tenantId);
+            return this.mapper.Map<TenantAnalyticsDTO>(analytics);
+        }
+
         public RentAnalyticsDTO GetRentAnalyticsForLandlord(int landlordId)
         {
             var data = this.repo.GetRentAnalyticsForLandlord(landlordId);
@@ -31,9 +37,23 @@ namespace BLL.Services
             return entity;
         }
 
+        public TenantRentAnalyticsDTO GetRentAnalyticsForTenant(int tenantId)
+        {
+            var data = this.repo.GetRentAnalyticsForTenant(tenantId);
+            var entity = this.mapper.Map<TenantRentAnalyticsDTO>(data);
+            return entity;
+        }
+
         public LeaseAnalyticsDTO GetLeaseAnalyticsForLandlord(int landlordId)
         {
             var data = this.repo.GetLeaseAnalyticsForLandlord(landlordId);
+            var entity = this.mapper.Map<LeaseAnalyticsDTO>(data);
+            return entity;
+        }
+
+        public LeaseAnalyticsDTO GetLeaseAnalyticsForTenant(int tenantId)
+        {
+            var data = this.repo.GetLeaseAnalyticsForTenant(tenantId);
             var entity = this.mapper.Map<LeaseAnalyticsDTO>(data);
             return entity;
         }

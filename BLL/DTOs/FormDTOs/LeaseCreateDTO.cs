@@ -11,23 +11,22 @@ namespace BLL.DTOs.FormDTOs
         [Required]
         public int PropertyId { get; set; }
 
-        [Required]
         public int LandlordId { get; set; }
 
         [Required]
         public int TenantId { get; set; }
 
         [Required]
-        public double RentAmount { get; set; }
+        public double? RentAmount { get; set; }
 
         [Required]
-        public double DepositAmount { get; set; }
+        public double? DepositAmount { get; set; }
 
         [Required]
-        public DateOnly StartDate { get; set; }
+        public DateOnly? StartDate { get; set; }
 
         [Required]
-        public DateOnly EndDate { get; set; }
+        public DateOnly? EndDate { get; set; }
 
     }
 }

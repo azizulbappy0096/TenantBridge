@@ -40,6 +40,9 @@ namespace BLL
             opt.CreateMap<Analytics, AnalyticsDTO>().ReverseMap();
             opt.CreateMap<RentAnalytics, RentAnalyticsDTO>().ReverseMap();
             opt.CreateMap<LeaseAnalytics, LeaseAnalyticsDTO>().ReverseMap();
+
+            opt.CreateMap<TenantAnalytics, TenantAnalyticsDTO>().ReverseMap();
+            opt.CreateMap<TenantRentAnalytics, TenantRentAnalyticsDTO>().ReverseMap();
         });
 
         public static Mapper GetMapper()

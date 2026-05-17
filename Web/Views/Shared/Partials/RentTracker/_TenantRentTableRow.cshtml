@@ -1,0 +1,54 @@
+﻿<tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+    <td class="px-5 py-3 text-gray-700">@Model.ReceiptNo</td>
+    <td class="px-5 py-3 text-gray-700">@Model.RentMonth</td>
+    <td class="px-5 py-3 text-gray-600">
+        @(Model?.PaidDate != null ? Model.PaidDate.ToString("MMMM dd, yyyy") : "-")
+    </td>
+    <td class="px-5 py-3 text-right" style="font-weight: 600">
+        ৳@(Model?.Amount ?? 0)
+    </td>
+    <td class="px-5 py-3 text-center">
+        @if (Model?.Status == "Paid")
+        {
+            <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-green-100 text-green-700">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="lucide lucide-circle-check w-4 h-4 text-green-500">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                Paid
+            </span>
+        }
+        else if (Model?.Status == "Pending")
+        {
+            <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-orange-100 text-orange-700">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="lucide lucide-clock w-4 h-4 text-orange-500">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                Pending
+            </span>
+        }
+
+        
+    </td>
+
+
+</tr>

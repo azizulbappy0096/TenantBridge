@@ -45,12 +45,14 @@
                         <input type="date"
                                class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                                name="StartDate" />
+                        <span id="StartDate-error" class="text-red-500 text-xs"></span>
                     </div>
                     <div>
                         <label class="text-sm text-gray-600 mb-1 block"> New End Date</label>
                         <input type="date"
                                class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                                name="EndDate" />
+                        <span id="EndDate-error" class="text-red-500 text-xs"></span>
                     </div>
                 </div>
                 <div>
@@ -58,17 +60,16 @@
                     <input type="number"
                            class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                            name="RentAmount" />
+                    <span id="RentAmount-error" class="text-red-500 text-xs"></span>
                 </div>
                 <div>
                     <label class="text-sm text-gray-600 mb-1 block"> New Deposit Amount (৳)</label>
                     <input type="number"
                            class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                            name="DepositAmount" />
+                    <span id="DepositAmount-error" class="text-red-500 text-xs"></span>
                 </div>
-                <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-3 text-sm text-indigo-700">
-                    Renewal alerts will be auto-sent at 60, 30, and 7 days before new
-                    expiry.
-                </div>
+   
             </div>
             <div class="mt-5 flex gap-2">
                 <button type="submit" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm hover:bg-indigo-700 transition-colors">

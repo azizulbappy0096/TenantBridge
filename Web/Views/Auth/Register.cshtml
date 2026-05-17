@@ -90,7 +90,7 @@
                 <input type="hidden"
                        id="roleInput"
                        asp-for="Role"
-                       value="2" />
+                       value="3" />
 
                 <button id="tenantBtn"
                         type="button"
@@ -286,7 +286,7 @@
             if (!tenantBtn || !landlordBtn)
                 return;
 
-            roleInput.value = "2";
+            roleInput.value = "3";
         
 
             tenantBtn.addEventListener("click", () => {

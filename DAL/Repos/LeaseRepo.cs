@@ -23,7 +23,11 @@ namespace DAL.Repos
 
         public List<Lease> GetByTenantId(int tenantId)
         {
-            return db.Leases.Where(l => l.Active && l.TenantId == tenantId).OrderByDescending(l => l.StartDate).ToList();
+            return db.Leases.Where(l => l.Active && l.TenantId == tenantId)
+                .Include(l => l.Property)
+                .Include(l => l.Landlord)
+                .OrderByDescending(l => l.StartDate)
+                .ToList();
         }
 
         public List<Lease> GetByLandlordId(int landlordId)

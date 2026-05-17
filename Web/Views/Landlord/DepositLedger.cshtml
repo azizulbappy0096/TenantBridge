@@ -115,9 +115,11 @@
                 if (response.ok) {
                     window.location.reload()
                 }else if(response.status === 400) {
-                    errorElems.PropertyLeaseId.innerHTML = jsonRes?.errors?.PropertyLeaseId ?? "";
-                    errorElems.Amount.innerHTML = jsonRes?.errors?.Amount ?? "";
-                    errorElems.PaidDate.innerHTML = jsonRes?.errors?.PaidDate ?? "";
+                    Object.keys(jsonRes.errors).forEach(key => {
+                        if (errorElems[key]) {
+                            errorElems[key].textContent = jsonRes.errors[key][0];
+                        }
+                    });
                 }else {
                     messageContainer.innerHTML = messageTemplate('Failed to add deposit. Please try again.', false);
                 }

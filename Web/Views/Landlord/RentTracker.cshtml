@@ -61,7 +61,7 @@
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="bg-gray-50 border-b border-gray-100">
-                            <th class="text-center px-5 py-3 text-gray-500 font-medium">
+                            <th class="text-left px-5 py-3 text-gray-500 font-medium">
                                 Receipt
                             </th>
                             <th class="text-left px-5 py-3 text-gray-500 font-medium">
@@ -152,11 +152,11 @@
                 if (response.ok) {
                     window.location.reload()
                 }else if(response.status === 400) {
-                    errorElems.PropertyLeaseId.innerHTML = jsonRes?.errors?.PropertyLeaseId ?? "";
-                    errorElems.Amount.innerHTML = jsonRes?.errors?.Amount ?? "";
-                    errorElems.PaidDate.innerHTML = jsonRes?.errors?.PaidDate ?? "";
-                    errorElems.Status.innerHTML = jsonRes?.errors?.Status ?? "";
-                    errorElems.RentMonth.innerHTML = jsonRes?.errors?.RentMonth ?? "";
+                    Object.keys(jsonRes.errors).forEach(key => {
+                        if (errorElems[key]) {
+                            errorElems[key].textContent = jsonRes.errors[key][0];
+                        }
+                    });
                 }else {
                     messageContainer.innerHTML = messageTemplate('Failed to add deposit. Please try again.', false);
                 }

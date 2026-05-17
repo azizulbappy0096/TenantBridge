@@ -1,6 +1,343 @@
 ﻿@{
     Layout = "_Layout";
+    var CurrentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    string ActiveClass = "bg-indigo-600 text-white shadow-sm shadow-indigo-200";
+    string InactiveClass = "text-gray-600 hover:bg-gray-100 hover:text-gray-900";
 }
+
+<div class="tailwind css-uwf2km css-fou3uo">
+  <div class="min-h-screen bg-gray-50 flex">
+    <aside
+      class="fixed top-0 left-0 h-full z-40 w-64 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0 lg:static lg:z-auto"
+    >
+      <div class="px-4 pt-5 pb-3 border-b border-gray-100">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div
+              class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-building2 lucide-building-2 w-5 h-5 text-white"
+              >
+                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                <path d="M10 6h4"></path>
+                <path d="M10 10h4"></path>
+                <path d="M10 14h4"></path>
+                <path d="M10 18h4"></path>
+              </svg>
+            </div>
+            <div>
+              <p
+                class="text-gray-900"
+                style="font-weight: 700; font-size: 1rem; line-height: 1"
+              >
+                TenantBridge
+              </p>
+              <p class="text-gray-400 text-xs mt-0.5">
+                Rental Platform
+              </p>
+            </div>
+          </div>
+          <button class="lg:hidden text-gray-400 hover:text-gray-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-x w-5 h-5"
+            >
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="px-4 py-3 border-b border-gray-100">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0 bg-indigo-600"
+            style="font-weight: 700; font-size: 0.875rem"
+          >
+            @ViewBag.CurrentUser.FullName.Substring(0,1)
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm text-gray-900 truncate" style="font-weight: 600">
+              @ViewBag.CurrentUser.FullName
+            </p>
+            <p class="text-xs text-gray-400 truncate">
+              @ViewBag.CurrentUser.Email
+            </p>
+          </div>
+          <span
+            class="text-xs px-2 py-0.5 rounded-full shrink-0 bg-indigo-100 text-indigo-700"
+            >Tenant</span
+          >
+        </div>
+      </div>
+      
+      <nav class="flex-1 p-3 space-y-0.5 overflow-y-auto mt-2">
+        <p
+          class="text-xs text-gray-400 px-3 py-1.5"
+          style="font-weight: 600; letter-spacing: 0.05em"
+        >
+          MENU
+        </p>
+        <a
+          asp-controller="Tenant"
+          asp-action="Index"
+            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group
+                @(CurrentAction == "Index" ? ActiveClass : InactiveClass)"  
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-layout-dashboard w-4 h-4 shrink-0 @(CurrentAction == "Index" ? "text-white" : "text-gray-400 group-hover:text-gray-700")"
+          >
+            <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+            <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+            <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+            <rect width="7" height="5" x="3" y="16" rx="1"></rect></svg
+          ><span class="flex-1 text-sm truncate @(CurrentAction == "Index" ? "font-semibold" : "")"
+            >Dashboard</span
+          ></a>
+        
+          <a
+              asp-controller="Tenant"
+          asp-action="RentTracker"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group
+                @(CurrentAction == "RentTracker" ? ActiveClass : InactiveClass)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-dollar-sign w-4 h-4 shrink-0 @(CurrentAction == "RentTracker" ? "text-white" : "text-gray-400 group-hover:text-gray-700")"
+          >
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path
+              d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+            ></path></svg
+          ><span class="flex-1 text-sm truncate @(CurrentAction == "RentTracker" ? "font-semibold" : "")"
+            >Rent Tracker</span
+          ></a>
+       
+        <a
+            asp-controller="Tenant"
+          asp-action="DepositLedger"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group
+                @(CurrentAction == "DepositLedger" ? ActiveClass : InactiveClass)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-shield w-4 h-4 shrink-0 @(CurrentAction == "DepositLedger" ? "text-white" : "text-gray-400 group-hover:text-gray-700")"
+          >
+            <path
+              d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+            ></path></svg
+          ><span class="flex-1 text-sm truncate" style="font-weight: 400"
+            >Deposit Ledger</span
+          ></a>
+        <a
+            asp-controller="Tenant"
+          asp-action="LeaseAlerts"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group
+                @(CurrentAction == "LeaseAlerts" ? ActiveClass : InactiveClass)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-bell w-4 h-4 shrink-0 @(CurrentAction == "LeaseAlerts" ? "text-white" : "text-gray-400 group-hover:text-gray-700")"
+          >
+            <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
+            <path
+              d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"
+            ></path></svg
+          ><span class="flex-1 text-sm truncate" style="font-weight: 400"
+            >Leases</span
+          ></a>
+     
+      </nav>
+      <div class="p-3 border-t border-gray-100 space-y-0.5">
+        <a
+          asp-controller="Auth"
+          asp-action="Settings"
+            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group
+                @(CurrentAction == "Settings" ? ActiveClass : InactiveClass)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-settings w-4 h-4"
+          >
+            <path
+              d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+            ></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          Settings</a>
+        <a
+            asp-controller="Auth"
+            asp-action="Logout"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors text-sm text-left"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-log-out w-4 h-4"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" x2="9" y1="12" y2="12"></line>
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </aside>
+    <div class="flex-1 flex flex-col min-w-0">
+      <header
+        class="bg-white border-b border-gray-100 px-5 py-3.5 flex items-center gap-4 sticky top-0 z-20"
+      >
+        <button class="lg:hidden text-gray-500 hover:text-gray-700">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-menu w-5 h-5"
+          >
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="flex items-center gap-2 text-sm">
+          <span class="text-gray-400 hidden sm:block">TenantBridge</span
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-chevron-right w-3.5 h-3.5 text-gray-300 hidden sm:block"
+          >
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+          <div class="flex items-center gap-1.5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-layout-dashboard w-3.5 h-3.5 text-indigo-500"
+            >
+              <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+              <rect width="7" height="5" x="3" y="16" rx="1"></rect></svg
+            ><span class="text-gray-800" style="font-weight: 500"
+              >Dashboard</span
+            >
+          </div>
+        </div>
+        <div class="flex-1"></div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-gray-400 hidden sm:block">@DateTime.Now.ToString("MMMM dd, yyyy")</span>
+          <span
+            class="hidden sm:block text-xs px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700"
+            >Tenant</span
+          >
+          <div
+            class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs bg-indigo-600"
+            style="font-weight: 700"
+          >
+            @ViewBag.CurrentUser.FullName.Substring(0,1)
+          </div>
+        </div>
+      </header>
+
+      @RenderBody()
+
+      <footer
+        class="bg-white border-t border-gray-100 px-5 py-3 text-xs text-gray-400 flex items-center justify-between"
+      >
+        <span>© 2026 TenantBridge</span
+        ><span class="hidden sm:block">Dhaka, Bangladesh</span>
+      </footer>
+    </div>
+  </div>
+</div>
 
 
 

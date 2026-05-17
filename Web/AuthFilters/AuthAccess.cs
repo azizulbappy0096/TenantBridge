@@ -27,6 +27,8 @@ namespace Web.AuthFilters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+            var isAuthenticated = context.HttpContext.User.Identity?.IsAuthenticated ?? false;
+
             if (!string.IsNullOrEmpty(this._path) && (this._path.ToLower() == "login" || this._path.ToLower() == "register"))
             {
                 var CurrentUserRole = int.Parse(context.HttpContext.User.FindFirstValue(ClaimTypes.Role) ?? "0");
@@ -45,7 +47,7 @@ namespace Web.AuthFilters
                 return;
             }
 
-            var isAuthenticated = context.HttpContext.User.Identity?.IsAuthenticated ?? false;
+            
 
             if(!isAuthenticated)
             {

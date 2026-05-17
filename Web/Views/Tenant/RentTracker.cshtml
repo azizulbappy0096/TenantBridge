@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "_TenantDashboardLayout";
+}
+
+<main class="flex-1 p-5 lg:p-7 overflow-y-auto">
+    <div class="space-y-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-gray-900">Tenant Rent Tracker</h1>
+                <p class="text-gray-500 text-sm mt-1">
+                    Track payments across your leases
+                </p>
+            </div>
+
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="bg-green-50 border border-green-100 rounded-2xl p-4">
+                <p class="text-green-600 text-sm">Total Rent Paid</p>
+                <p class="text-green-800 mt-1"
+                   style="font-size: 1.4rem; font-weight: 700">
+                    ৳@ViewBag.Analytics.RentPaid
+                </p>
+            </div>
+            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-4">
+                <p class="text-orange-600 text-sm">Pending Rent</p>
+                <p class="text-orange-800 mt-1"
+                   style="font-size: 1.4rem; font-weight: 700">
+                    ৳@ViewBag.Analytics.PendingRent
+                </p>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button class="px-4 py-1.5 rounded-xl text-sm transition-colors bg-indigo-600 text-white">
+                All
+            </button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 border-b border-gray-100">
+                            <th class="text-center px-5 py-3 text-gray-500 font-medium">
+                                Receipt
+                            </th>
+                            <th class="text-left px-5 py-3 text-gray-500 font-medium">
+                                Month
+                            </th>
+                            <th class="text-left px-5 py-3 text-gray-500 font-medium">
+                                Paid Date
+                            </th>
+                            <th class="text-right px-5 py-3 text-gray-500 font-medium">
+                                Rent
+                            </th>
+                            <th class="text-center px-5 py-3 text-gray-500 font-medium">
+                                Status
+                            </th>
+                         
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payment in Model)
+                        {
+                            <partial name="~/Views/Shared/Partials/RentTracker/_TenantRentTableRow.cshtml" model="payment" />
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</main>
