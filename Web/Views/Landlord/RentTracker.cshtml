@@ -152,9 +152,14 @@
                 if (response.ok) {
                     window.location.reload()
                 }else if(response.status === 400) {
-                    Object.keys(jsonRes.errors).forEach(key => {
-                        if (errorElems[key]) {
+                    const serverErrorKeys = Object.keys(jsonRes.errors);
+
+                    Object.keys(errorElems).forEach(key => {
+
+                        if(serverErrorKeys.includes(key)) {
                             errorElems[key].textContent = jsonRes.errors[key][0];
+                        }else {
+                            errorElems[key].textContent = ""
                         }
                     });
                 }else {

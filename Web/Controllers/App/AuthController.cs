@@ -162,6 +162,9 @@ namespace Web.Controllers
                 User = user,
                 Profile = obj,
             };
+
+            TempData["Error"] = "Failed to change password. Validation error.";
+
             return View("Settings", model);
         }
 
@@ -172,6 +175,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+              
                 var success = this.authService.ChangePassword(this.currentUser.UserId, obj.OldPassword, obj.NewPassword);
                 if (success)
                 {
@@ -197,6 +201,8 @@ namespace Web.Controllers
                 },
                 Password = obj
             };
+
+            TempData["Error"] = "Failed to change password. Validation error.";
 
             return View("Settings", model);
         }

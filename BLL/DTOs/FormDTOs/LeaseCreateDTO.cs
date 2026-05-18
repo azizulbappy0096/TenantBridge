@@ -17,9 +17,11 @@ namespace BLL.DTOs.FormDTOs
         public int TenantId { get; set; }
 
         [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "Rent amount must be greater than 0")]
         public double? RentAmount { get; set; }
 
         [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "Deposit amount must be greater than 0")]
         public double? DepositAmount { get; set; }
 
         [Required]

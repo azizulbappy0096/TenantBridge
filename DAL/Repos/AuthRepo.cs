@@ -1,4 +1,5 @@
-﻿using DAL.EF;
+﻿using BLL.DTOs.Helpers;
+using DAL.EF;
 using DAL.EF.Tables;
 using System;
 using System.Collections.Generic;
@@ -37,11 +38,12 @@ namespace DAL.Repos
 
         public User? Login(string email, string password)
         {
-            return db.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(password)).FirstOrDefault();
+            return db.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(AuthHelper.GetMd5(password))).FirstOrDefault();
         }
 
         public bool Register(User user)
         {
+            user.Password = AuthHelper.GetMd5(user.Password);
             db.Users.Add(user);
             return db.SaveChanges() > 0;
         }
@@ -49,8 +51,8 @@ namespace DAL.Repos
         public bool ChangePassword(int id, string oldPassword, string newPassword)
         {
             var user = Get(id);
-            if (user == null || !user.Password.Equals(oldPassword)) return false;
-            user.Password = newPassword;
+            if (user == null || !user.Password.Equals(AuthHelper.GetMd5(oldPassword))) return false;
+            user.Password = AuthHelper.GetMd5(newPassword);
             return Update(user);
         }
 

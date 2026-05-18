@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.DTOs.Auth;
 using DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -7,18 +8,18 @@ using System.Text;
 
 namespace BLL.Validators
 {
-    public class PasswordMatchValidator : ValidationAttribute
+    public class NewPasswordValidator : ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var obj = validationContext.ObjectInstance as UserDTO;
+            var obj = validationContext.ObjectInstance as ChangePasswordDTO;
 
-            if (obj != null && obj.Password.Equals(value.ToString()))
+            if (obj != null && !obj.OldPassword.Equals(value.ToString()))
             {
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult("Passwords do not match.");
+            return new ValidationResult("New password cannot be the same as the old password.");
         }
     }
 

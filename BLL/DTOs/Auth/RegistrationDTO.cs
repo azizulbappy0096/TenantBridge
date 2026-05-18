@@ -30,6 +30,8 @@ namespace BLL.DTOs.Auth
         [Required]
         public string PhoneNumber { get; set; } = null!;
 
+        [Required]
+        [AllowedValues([2, 3], ErrorMessage = "Role must be 'Landlord', or 'Tenant'")]
         public int Role { get; set; }
 
     }

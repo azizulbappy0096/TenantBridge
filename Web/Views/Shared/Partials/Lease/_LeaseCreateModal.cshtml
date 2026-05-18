@@ -41,7 +41,7 @@
                         <option value="" disabled selected>Select a tenant</option>
                         @foreach (var tenant in ViewBag.Tenants)
                         {
-                            <option value="@tenant.Id">@tenant.FullName</option>
+                            <option value="@tenant.Id">@tenant.FullName (@tenant.Email)</option>
                         }
                     </select>
                     <span id="TenantId-error" class="text-red-500 text-xs"></span>
